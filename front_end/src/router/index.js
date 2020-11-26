@@ -1,20 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 const routerOptions = [
-  {path: '/data',component: 'DataPresent'},
-  { path: '/', component: 'Home' },
-  { path: '/about', component: 'About' },
-  { path: '*', component: 'NotFound' }
+    {path: '/data', component: 'DataPresent'},
+    {path: '/word', component: 'WordCloud'},
+    {path: '/', component: 'Home'},
+    {path: '/about', component: 'About'},
+    {path: '*', component: 'NotFound'}
 
 ]
 const routes = routerOptions.map(route => {
-  return {
-    ...route,
-    component: () => import(`@/components/${route.component}.vue`)
-  }
+    return {
+        ...route,
+        component: () => import(`@/components/${route.component}.vue`)
+    }
 })
 Vue.use(Router)
 export default new Router({
-  routes,
-  mode: 'history'
+    routes,
+    mode: 'history'
 })

@@ -10,8 +10,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "@jiaminghi/data-view": "^2.10.0",
     "axios": "^0.21.0",
+    "echarts": "^4.9.0",
+    "v-charts": "^1.19.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

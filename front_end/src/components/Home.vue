@@ -32,7 +32,10 @@ export default {
 				.catch(error => {
 					console.log(error)
 				})
-		}
+		},
+	},
+	watch:{
+
 	},
 	created () {
 		this.getRandom()

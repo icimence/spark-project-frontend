@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import dataV from '@jiaminghi/data-view'
-Vue.use(dataV)
+import VCharts from 'v-charts'
+
+Vue.use(VCharts)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
