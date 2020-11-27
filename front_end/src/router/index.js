@@ -2,8 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const routerOptions = [
-    {path: '/data', component: 'DataPresent'},
     {path: '/word', component: 'WordCloud'},
+    {path: '/map', component: 'Map'},
+    {path: '/lineChart',component: 'LineChart'},
+    {path: '/barChart',component: 'BarChart'},
+    {path: '/roseMap',component: 'RoseMap'},
     {path: '/', component: 'Home'},
     {path: '/about', component: 'About'},
     {path: '*', component: 'NotFound'}

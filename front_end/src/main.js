@@ -4,7 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VCharts from 'v-charts'
-
+import '../node_modules/echarts/map/js/world.js' // 引入世界地图
+import echarts from 'echarts'
+Vue.use(echarts)
 Vue.use(VCharts)
 
 Vue.config.productionTip = false

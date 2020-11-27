@@ -2,14 +2,24 @@
 	<div>
 		<p>Home page</p>
 		<p>Random number from backend: {{ randomNumber }}</p>
-		<button @click="getRandom">New random number</button>
+        <WordCloud></WordCloud>
+        <BarChart></BarChart>
+        <LineChart></LineChart>
+        <RoseMap></RoseMap>
+        <MyMap></MyMap>
 	</div>
 </template>
 
 <script>
 import axios from 'axios'
+import WordCloud from "./WordCloud";
+import LineChart from "./LineChart";
+import RoseMap from "./RoseMap";
+import BarChart from "./BarChart";
+import MyMap from "./Map";
 export default {
-	data () {
+    components: {RoseMap, LineChart, BarChart, WordCloud,MyMap},
+    data () {
 		return {
 			randomNumber: 0
 		}
@@ -33,12 +43,20 @@ export default {
 					console.log(error)
 				})
 		},
+		times(){
+			return setInterval(()=>{
+				this.getRandomFromBackEnd()
+			},100)
+		}
 	},
-	watch:{
-
+	destroyed(){
+		clearInterval(this.times)
 	},
 	created () {
 		this.getRandom()
+	},
+	mounted(){
+		this.times()
 	}
 }
 </script>
