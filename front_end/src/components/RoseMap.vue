@@ -1,8 +1,9 @@
 <template>
-    <ve-ring :data="chartData" :settings="chartSettings"></ve-ring>
+    <ve-ring :data="chartData"  jude-width=true height="100%" :settings="chartSettings"></ve-ring>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name:'RoseMap',
     data () {
@@ -11,17 +12,38 @@ export default {
         }
         return {
             chartData: {
-                columns: ['日期', '访问用户'],
-                rows: [
-                    { '日期': '1/1', '访问用户': 1393 },
-                    { '日期': '1/2', '访问用户': 3530 },
-                    { '日期': '1/3', '访问用户': 2923 },
-                    { '日期': '1/4', '访问用户': 1723 },
-                    { '日期': '1/5', '访问用户': 3792 },
-                    { '日期': '1/6', '访问用户': 4593 }
-                ]
+                columns: ['state', 'number'],
+                rows: []
             }
         }
+    },
+    methods:{
+        getRoseMapRowsFromBackend(){
+
+            const path= `http://localhost:5000/api/answer`
+            axios.get(path)
+                .then(response => {
+                    console.log(response.data)
+                    this.chartData.rows = response.data
+                })
+                .catch(error =>{
+                    console.log(error)
+                })
+        },
+        times(){
+            return setInterval(()=>{
+                this.getRowsFromBackend()
+            },2000)
+        }
+    },
+    destroyed() {
+        clearInterval(this.times())
+    },
+    mounted() {
+        this.times()
+    },
+    created() {
+        this.getRoseMapRowsFromBackend()
     }
 }
 </script>

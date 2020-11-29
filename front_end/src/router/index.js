@@ -9,7 +9,10 @@ const routerOptions = [
     {path: '/roseMap',component: 'RoseMap'},
     {path: '/', component: 'Home'},
     {path: '/about', component: 'About'},
-    {path: '*', component: 'NotFound'}
+    {path: '/element',component: 'Element'},
+    {path: '*', component: 'NotFound'},
+    {path: '/cloudtest', component: 'Cloudtest'},
+
 
 ]
 const routes = routerOptions.map(route => {
