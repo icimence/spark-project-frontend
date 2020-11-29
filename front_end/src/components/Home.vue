@@ -291,7 +291,9 @@ export default {
 }
 
 .pum_left .top {
-    border-bottom: 0;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: whitesmoke;
     height: 50%;
     margin-left: 3%;
     border-radius: 10px;
@@ -300,9 +302,11 @@ export default {
 }
 
 .pum_left .bot {
-    border-bottom: 0;
-    margin-top: 5%;
-    height: 335px;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: whitesmoke;
+    margin-top: 3%;
+    height: 340px;
     border-radius: 10px;
     margin-left: 3%;
     background-color: #3791EF;
@@ -310,7 +314,9 @@ export default {
 }
 
 .pum_right .top {
-    border-bottom: 0;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: whitesmoke;
     background-color: #3791EF;
     border-radius: 10px;
     height: 45%;
@@ -318,7 +324,10 @@ export default {
 }
 
 .pum_right .bot {
-    background-color: #3791EF;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: whitesmoke;
+    background-color: #8dbff2;
     border-radius: 10px;
     margin-top: 2.5%;
     padding-top: -3.5%;
@@ -342,6 +351,9 @@ export default {
 }
 
 .main-center .center-top {
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: whitesmoke;
     background-color: #3791EF;
     border-radius: 10px;
     height: 58%;
@@ -349,8 +361,12 @@ export default {
 }
 
 .main-center .center-bottom {
-    margin-top: 1.5%;
-    height: 40%;
+    border-style: solid;
+    border-width: 1.5px;
+    padding-top: 20px;
+    border-color: whitesmoke;
+    margin-top: 1%;
+    height: 37.7%;
     background-color: #3791EF;
     border-radius: 10px;
 }

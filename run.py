@@ -182,7 +182,6 @@ def get_line():
     ticks = time.time()
     timeArray = time.localtime(ticks)
     res = time.strftime("%H:%M:%S", timeArray)
-    print(res)
     line_dict = {'time': res, 'C': 0, 'Java': 0, 'Python': 0}
     for msg in consumer:
         result = ((msg.value).decode('utf8')).replace("[", "").replace("]", "").replace("{", "").replace("}", "")
@@ -194,15 +193,14 @@ def get_line():
         temp_list = item.split(": ")
         lan = temp_list[0][1:-1]
         if lan.startswith("C") or lan.startswith("c"):
-            line_dict['C'] += 1
+            line_dict['C'] += int(temp_list[1])
         elif lan.startswith("python") or lan.startswith("Python"):
-            line_dict['Python'] += 1
+            line_dict['Python'] += int(temp_list[1])
         elif lan.startswith("java") or lan.startswith("Java"):
-            line_dict['Java'] += 1
+            line_dict['Java'] += int(temp_list[1])
     if len(lineHistory) > 8:
         del lineHistory[0]
     lineHistory.append(line_dict)
-    print(lineHistory)
     return json.dumps(lineHistory)
 
 
