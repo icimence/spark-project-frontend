@@ -43,19 +43,14 @@ def get_answer():
             break
     resList = []
     returnList = []
-    resList = result.split(", ")
+    resList = result.split(",")
     for item in resList:
         temp_dict = {}
-        temp_list = item.split(": ")
+        temp_list = item.split(":")
         temp_dict['state'] = temp_list[0][1:-1]
         temp_dict['number'] = int(temp_list[1])
         returnList.append(temp_dict)
-        returnJson = json.dumps(returnList)
-
-    # returnJson = [
-    #     {'state':"answered",'number':24},
-    #     {'st'}
-    # ]
+    returnJson = json.dumps(returnList)
     return returnJson
 
 
@@ -70,10 +65,10 @@ def get_count():
             break
     resList = []
     returnList = []
-    resList = result.split(", ")
+    resList = result.split(",")
     for item in resList:
         temp_dict = {}
-        temp_list = item.split(": ")
+        temp_list = item.split(":")
         temp_dict['word'] = temp_list[0][1:-1]
         temp_dict['count'] = int(temp_list[1])
         returnList.append(temp_dict)
@@ -92,12 +87,12 @@ def get_location():
             break
     resList = []
     returnList = []
-    resList = result.split(", ")
+    resList = result.split(",")
     for item in resList:
         if item[0:2] == '\"\"':
             continue
         temp_dict = {}
-        temp_list = item.split(": ")
+        temp_list = item.split(":")
         temp_dict['number'] = int(temp_list[-1])
         temp_temp_list = temp_list[0][1:-1].split('+')
         temp_dict['lat'] = float(temp_temp_list[1])
@@ -114,22 +109,13 @@ def get_bar():
     for msg in consumer:
         result = ((msg.value).decode('utf8')).replace("[", "").replace("]", "").replace("{", "").replace("}", "")
         i += 1
-        if i > 0 and msg is not None and result != "":
+        if i > 0 and msg is not None and result != "" and result.split(",")[0].split(":")[1] != '0':
             break
-    result = '{' + result + '}'
-    result = eval(result)
-    result = sorted(result.items(), key=lambda x: x[1], reverse=True)
-    result = str(result)[1:-1]
-    resList = []
     returnList = []
-    resList = result.split("), (")
+    resList = result.split(",")
     for item in resList:
-        if item[0] == '(':
-            item = item[1:len(item)]
-        if item[-1] == ')':
-            item = item[0:-1]
         temp_dict = {}
-        temp_list = item.split(", ")
+        temp_list = item.split(":")
         temp_dict['language'] = temp_list[0][1:-1]
         temp_dict['number'] = int(temp_list[1])
         if len(returnList) == 5:
@@ -150,13 +136,13 @@ def get_funnel():
             break
     resList = []
     returnList = []
-    resList = result.split(", ")
+    resList = result.split(",")
     temp_dict1 = {'range': '0~500', 'number': 0}
     temp_dict2 = {'range': '500~5000', 'number': 0}
     temp_dict3 = {'range': '5000~10000', 'number': 0}
     temp_dict4 = {'range': 'Over 10000', 'number': 0}
     for item in resList:
-        temp_list = item.split(": ")
+        temp_list = item.split(":")
         temp_num = int(temp_list[0][1:-1])
         if 0 < temp_num < 500:
             temp_dict1['number'] += 1
@@ -188,9 +174,9 @@ def get_line():
         i += 1
         if i > 0 and msg is not None and result != "":
             break
-    resList = result.split(", ")
+    resList = result.split(",")
     for item in resList:
-        temp_list = item.split(": ")
+        temp_list = item.split(":")
         lan = temp_list[0][1:-1]
         if lan.startswith("C") or lan.startswith("c"):
             line_dict['C'] += int(temp_list[1])
@@ -200,7 +186,8 @@ def get_line():
             line_dict['Java'] += int(temp_list[1])
     if len(lineHistory) > 8:
         del lineHistory[0]
-    lineHistory.append(line_dict)
+    if line_dict['Java'] != 0 and line_dict['Python'] != 0 and line_dict['C'] != 0:
+        lineHistory.append(line_dict)
     return json.dumps(lineHistory)
 
 

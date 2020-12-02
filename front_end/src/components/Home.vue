@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <div class="header">
-            <p style="color: white; font-size: 30px;font-family: STSong">Stackoverflow 检 测 平 台</p>
+           <img  style="zoom: 0.7;margin-top: 13px" src="../assets/version1.png" alt="logo"/>
         </div>
         <div class="main">
             <div class="pum_left">
@@ -45,15 +45,8 @@
 
 <script>
 import axios from 'axios'
-import WordCloud from "./WordCloud";
-import LineChart from "./LineChart";
-import RoseMap from "./RoseMap";
-import BarChart from "./BarChart";
-import MyMap from "./Map";
-import Element_ from "./Element";
 
 export default {
-    components: {RoseMap, LineChart, BarChart, WordCloud, MyMap, Element_},
     data() {
         this.roseMapChartSetting = {
             roseType: 'radius'
@@ -124,7 +117,6 @@ export default {
                 columns: ['time', 'C','Java','Python'],
                 rows: [],
             },
-            randomNumber: 0
         }
     },
     methods: {
@@ -210,7 +202,7 @@ export default {
                 this.getBarChartRowsFromBackend()
                 this.getFunnelChartRowsFromBackend()
                 this.getLineChartRowsFromBackend()
-            }, 2000)
+            }, 5000)
         },
         getClock() {
             return setInterval(() => {
@@ -255,11 +247,13 @@ export default {
 .header {
     height: 100px;
     line-height: 100px;
-    background-color: #3791EF;
     border-radius: 10px;
     margin: 1% 0.7% 10px 0.6%;
 
 
+}
+.header.topImg{
+    zoom: 50%;
 }
 
 .main {
