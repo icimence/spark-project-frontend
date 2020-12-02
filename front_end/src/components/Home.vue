@@ -1,19 +1,20 @@
 <template>
     <div class="home">
         <div class="header">
-           <img  style="zoom: 0.7;margin-top: 13px" src="../assets/version1.png" alt="logo"/>
+            <img style="margin-top: 1px;zoom: 48%;" src="../assets/title.png" alt="logo"/>
         </div>
         <div class="main">
             <div class="pum_left">
                 <div class="top">
-                    <ve-ring :data="roseMapChartData" jude-width=true height="100%"
-                             :settings="roseMapChartSetting"></ve-ring>
+                    <ve-ring :data="roseMapChartData" width="100%"
+                             :settings="roseMapChartSetting" :loading="this.roseMapLoading"
+                             :extend="roseExtend"></ve-ring>
                 </div>
                 <div>
                     <div class="bot">
                         <template>
                             <ve-funnel :data="funnelChartData" :settings="funnelChartSettings"
-                                       height="350px"></ve-funnel>
+                                       height="350px" :extend="funnelExtend"></ve-funnel>
                         </template>
 
                     </div>
@@ -21,16 +22,19 @@
             </div>
             <div class="main-center">
                 <div class="center-top">
-                    <ve-heatmap jude-width=true height="100%" :data="worldMapChartData"
-                                :settings="worldMapChartSettings"></ve-heatmap>
+                    <ve-heatmap jude-width=true :data="worldMapChartData"
+                                :settings="worldMapChartSettings" height="92%"
+                                :extend="worldMapExtend"></ve-heatmap>
                 </div>
                 <div class="center-bottom">
-                    <ve-line jude-width=true height="100%" :data="lineChartData" :settings="lineChartSettings" :color="colors" :extend="extend"></ve-line>
+                    <ve-line jude-width=true height="100%" :data="lineChartData" :settings="lineChartSettings"
+                             :color="colors" :extend="extend"></ve-line>
                 </div>
             </div>
             <div class="pum_right">
                 <div class="top">
-                    <ve-bar jude-width=true height="100%" :data="barChartData" :settings="barChartSettings"></ve-bar>
+                    <ve-bar jude-width=true height="100%" :data="barChartData" :settings="barChartSettings"
+                            :extend="barChartExtend"></ve-bar>
                 </div>
                 <div class="bot">
                     <ve-wordcloud
@@ -45,6 +49,7 @@
 
 <script>
 import axios from 'axios'
+import 'v-charts/lib/style.css'
 
 export default {
     data() {
@@ -84,13 +89,80 @@ export default {
             filterZero: true
         }
         this.lineChartSettings = {
-            metrics: ['C', 'Java','Python'],
+            metrics: ['C', 'Java', 'Python'],
             dimension: ['time']
         }
         this.extend = {
-            'xAxis.0.axisLabel.rotate': 45
+            'xAxis.0.axisLabel.rotate': 45,
+            legend: {
+                show: true,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            xAxis: {
+                axisLine: {
+                    lineStyle: {
+                        color: '#fff'
+                    }
+                }
+            },
+            yAxis: {
+                axisLine: {
+                    lineStyle: {
+                        color: '#fff'
+                    }
+                }
+            }
+        }
+        this.barChartExtend = {
+            legend: {
+                show: true,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            xAxis: {
+                axisLine: {
+                    lineStyle: {
+                        color: '#fff'
+                    }
+                }
+            },
+            yAxis: {
+                axisLine: {
+                    lineStyle: {
+                        color: '#fff'
+                    }
+                }
+            }
+        }
+        this.roseExtend = {
+            legend: {
+                show: true,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+        }
+        this.funnelExtend = {
+            legend: {
+                show: true,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+        }
+        this.worldMapExtend = {
+            legend: {
+                show: true,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
         }
         return {
+            roseMapLoading: true,
             strDate: '',
             strTime: '',
             barChartData: {
@@ -113,8 +185,8 @@ export default {
                 columns: ['range', 'number'],
                 rows: []
             },
-            lineChartData:{
-                columns: ['time', 'C','Java','Python'],
+            lineChartData: {
+                columns: ['time', 'C', 'Java', 'Python'],
                 rows: [],
             },
         }
@@ -131,7 +203,7 @@ export default {
             this.strDate = year + "年 " + (month + 1) + "月 " + day + "日"
             this.strTime = hour + ":" + minutes + ":" + seconds
         },
-        getLineChartRowsFromBackend(){
+        getLineChartRowsFromBackend() {
             const path = `http://localhost:5000/api/line`
             axios.get(path)
                 .then(response => {
@@ -163,6 +235,7 @@ export default {
                 })
         },
         getRoseMapRowsFromBackend() {
+            this.roseMapLoading = true
             const path = `http://localhost:5000/api/answer`
             axios.get(path)
                 .then(response => {
@@ -173,6 +246,7 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
+            this.roseMapLoading = false
         },
         getWorldMapRowsFromBackend() {
             const path = `http://localhost:5000/api/location`
@@ -232,7 +306,7 @@ export default {
 
 <style>
 .home {
-    background-color: #082C74;
+    background-image: url("../assets/background.png");
     height: 100%;
     position: absolute;
     left: 0;
@@ -248,19 +322,19 @@ export default {
     height: 100px;
     line-height: 100px;
     border-radius: 10px;
-    margin: 1% 0.7% 10px 0.6%;
+    margin: 1% 0.7% 10px 0;
 
 
 }
-.header.topImg{
+
+.header.topImg {
     zoom: 50%;
 }
 
 .main {
     flex: 1;
-    /* height: 400px; */
     display: flex;
-    border-bottom: 10px solid #082C74;
+    margin-bottom: 10px;
 }
 
 .pub {
@@ -268,7 +342,8 @@ export default {
 }
 
 .pum_left {
-//width: 400px; width: 20%; border-radius: 10px;
+    width: 400px;
+    border-radius: 10px;
 }
 
 .pum_right {
@@ -278,97 +353,66 @@ export default {
 
 .top {
     flex: 1;
-    border-bottom: 10px solid #082C74;
-    background-color: #3791EF;
-    border-radius: 10px;
-
+    margin-bottom: 10px;
 }
 
 .pum_left .top {
-    border-style: solid;
-    border-width: 1.5px;
+    padding-top: 9%;
+    background-image: url("../assets/borderB.png");
+    background-size: 100% 100%;
     border-color: whitesmoke;
     height: 50%;
     margin-left: 3%;
     border-radius: 10px;
-    background-color: #3791EF;
-
 }
 
 .pum_left .bot {
-    border-style: solid;
-    border-width: 1.5px;
+    padding-left: -5%; padding-top: 6%;
+    background-image: url("../assets/borderB.png");
+    background-size: 100% 100%;
     border-color: whitesmoke;
     margin-top: 3%;
-    height: 340px;
+    height: 300px;
     border-radius: 10px;
     margin-left: 3%;
-    background-color: #3791EF;
-
 }
 
 .pum_right .top {
-    border-style: solid;
-    border-width: 1.5px;
-    border-color: whitesmoke;
-    background-color: #3791EF;
-    border-radius: 10px;
+    background-image: url("../assets/borderB.png");
+    background-size: 100% 100%;
     height: 45%;
     margin-right: 3%;
+    padding-top: 5%;
 }
 
 .pum_right .bot {
-    border-style: solid;
-    border-width: 1.5px;
-    border-color: whitesmoke;
-    background-color: #8dbff2;
-    border-radius: 10px;
+    background-image: url("../assets/borderD.png"); background-size: 100% 100%;
     margin-top: 2.5%;
     padding-top: -3.5%;
     margin-right: 3%;
     height: 53.32%;
 }
 
-.pum_right .time {
-    background-color: #3791EF;
-    padding-top: 6%;
-    height: 8.9%;
-    margin-top: 2.5%;
-    margin-right: 3%;
-    border-radius: 10px;
-}
-
 .main-center {
-    border-left: 10px solid #082C74;
-    border-right: 10px solid #082C74;
+    margin-left: 10px;
+    margin-right: 10px;
     width: 60%;
 }
 
 .main-center .center-top {
-    border-style: solid;
-    border-width: 1.5px;
-    border-color: whitesmoke;
-    background-color: #3791EF;
-    border-radius: 10px;
+    background-image: url("../assets/border.png"); background-size: 100% 100%;
     height: 58%;
+    margin-top: -5%;
     padding-left: 4%;
+    padding-top: 8%;
 }
 
 .main-center .center-bottom {
-    border-style: solid;
-    border-width: 1.5px;
-    padding-top: 20px;
-    border-color: whitesmoke;
-    margin-top: 1%;
-    height: 37.7%;
-    background-color: #3791EF;
-    border-radius: 10px;
+    background-image: url("../assets/borderE.png"); background-size: 100% 100%;
+    padding-top: 8px;
+    margin-top: -2%;
+    height: 39.7%;
+
 }
 
-.footer {
-    height: 150px;
-    border: 0;
-    display: flex;
-    border-bottom: 1px solid #ccc;
-}
 </style>

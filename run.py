@@ -34,7 +34,7 @@ def random_number():
 
 @app.route('/api/answer')
 def get_answer():
-    consumer = KafkaConsumer('answer', bootstrap_servers=['49.235.251.50:9092'])
+    consumer = KafkaConsumer('answer', bootstrap_servers=['188.131.179.244:9092'])
     i = 0
     for msg in consumer:
         result = ((msg.value).decode('utf8')).replace("[", "").replace("]", "").replace("{", "").replace("}", "")
@@ -78,7 +78,7 @@ def get_count():
 
 @app.route('/api/location')
 def get_location():
-    consumer = KafkaConsumer('location', bootstrap_servers=['49.235.251.50:9092'])
+    consumer = KafkaConsumer('location', bootstrap_servers=['188.131.179.244:9092'])
     i = 0
     for msg in consumer:
         result = ((msg.value).decode('utf8')).replace("[", "").replace("]", "").replace("{", "").replace("}", "")
